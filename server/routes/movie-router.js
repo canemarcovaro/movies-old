@@ -1,5 +1,5 @@
 const express = require('express')
-
+console.log('rutas');
 const MovieCtrl = require('../controllers/movie-ctrl')
 
 const router = express.Router()
