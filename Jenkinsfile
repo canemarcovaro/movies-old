@@ -48,7 +48,7 @@ pipeline {
             }
             steps {
                 sh "docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
-                sh "docker push node_api-server_1"
+                sh "docker push zwenger/api-server"
             }
         }
         stage('stop') {
