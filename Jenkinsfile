@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker exec mern-docker-compose_api-server_1 run test'
+                sh 'docker exec mern-docker-compose_api-server_1 npm run test'
             }
             post {
                 success {
