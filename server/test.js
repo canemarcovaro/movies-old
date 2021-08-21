@@ -7,11 +7,8 @@ describe('movies API', () => {
     it('POST /movie', () => {
         // Make a GET request to the users route 
         return request
-            .post('/movie').send(movie).expect(201).then((res)=> id=res.id)
+            .post('/movie').send(movie).expect(201).then((res)=> id=res.body.id)
     });
-});
-
-describe('movies API', () => {
     it('GET /movie', () => {
         // Make a GET request to the users route 
         return request
@@ -19,20 +16,16 @@ describe('movies API', () => {
             .expect(200)
             .then((res) => {
                 // assert data bieng return to not be empty
-                assert(res.data.name == movie.name, 'Failed, not equals name!!');
+                assert(res.body.data.name == movie.name, 'Failed, not equals name!!');
             });
     });
-});
-
-describe('movies API', () => {
     it('DELETE /movie/:id', () => {
         // Make a GET request to the users route 
         return request
             .delete('/movie/'+id)
             .then((res) => {
-                // assert data bieng return to not be empty
-                assert(res.success == true, 'Movie not found');
-                assert(res.data.name == movie.name, 'Failed, not equals name!!');
+                assert(res.body.data.name == movie.name, 'Failed, not equals name!!');
             });
     });
 });
+
