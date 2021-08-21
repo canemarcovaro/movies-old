@@ -28,32 +28,32 @@ pipeline {
                 }
             }
         }
-        // stage('Test') {
-        //     steps {
-        //         sh 'docker exec mern-docker-compose_api-server_1 npm run test'
-        //     }
-        //     post {
-        //         success {
-        //             slackSend (color: 'good', message: "TEST SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-        //         }
-        //         failure {
-        //             slackSend (color: 'danger', message: "TEST FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-        //         }
-        //     }
-        // }
-        // stage('stop') {
-        //     steps {
-        //         sh 'make stop'
-        //     }
-        //     post {
-        //         success {
-        //             slackSend (color: 'good', message: "STOP SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-        //         }
-        //         failure {
-        //             slackSend (color: 'danger', message: "STOP FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-        //         }
-        //     }
-        // }
+        stage('Test') {
+            steps {
+                sh 'docker exec node_api-server_1 npm run test'
+            }
+            post {
+                success {
+                    slackSend (color: 'good', message: "TEST SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+                failure {
+                    slackSend (color: 'danger', message: "TEST FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+            }
+        }
+        stage('stop') {
+            steps {
+                sh 'make stop'
+            }
+            post {
+                success {
+                    slackSend (color: 'good', message: "STOP SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+                failure {
+                    slackSend (color: 'danger', message: "STOP FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+            }
+        }
         
     //     stage('Sonarqube') {
           
