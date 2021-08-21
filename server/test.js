@@ -2,7 +2,7 @@ const request = require('supertest')('http://localhost:5000/api');
 const assert = require('chai').assert;
 
 const movie = { "name": "Marconeitor 3000", "rating": "1", "time": ["1"] }
-const id;
+let id;
 describe('movies API', () => {
     it('POST /movie', () => {
         // Make a GET request to the users route 
@@ -19,7 +19,7 @@ describe('movies API', () => {
             .expect(200)
             .then((res) => {
                 // assert data bieng return to not be empty
-                assert.deepEqual(res.body, [movie]);
+                assert(res.data.name == movie.name, 'Failed, not equals name!!');
             });
     });
 });
@@ -31,7 +31,8 @@ describe('movies API', () => {
             .delete('/movie/'+id)
             .then((res) => {
                 // assert data bieng return to not be empty
-                assert.isNotEmpty(res.body);
+                assert(res.success == true, 'Movie not found');
+                assert(res.data.name == movie.name, 'Failed, not equals name!!');
             });
     });
 });
