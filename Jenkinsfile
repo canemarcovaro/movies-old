@@ -28,6 +28,19 @@ pipeline {
                 }
             }
         }
+        stage('Test') {
+            steps {
+                sh 'docker exec mern-docker-compose_api-server_1 run test'
+            }
+            post {
+                success {
+                    slackSend (color: 'good', message: "TEST SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+                failure {
+                    slackSend (color: 'danger', message: "TEST FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+            }
+        }
         stage('stop') {
             steps {
                 sh 'make stop'
@@ -41,23 +54,7 @@ pipeline {
                 }
             }
         }
-    //     stage('Test') {
-    //         steps {
-    //             sh 'mvn test'
-    //         }
-    //         post {
-    //             always {
-    //                 junit 'target/surefire-reports/*.xml'
-    //             }
-    //             success {
-    //                 slackSend (color: 'good', message: "TEST SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-    //                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
-    //             }
-    //             failure {
-    //                 slackSend (color: 'danger', message: "TEST FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-    //             }
-    //         }
-    //     }
+        
     //     stage('Sonarqube') {
           
     //         steps {
