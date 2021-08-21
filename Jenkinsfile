@@ -41,6 +41,16 @@ pipeline {
                 }
             }
         }
+        stage("Docker push") {
+            environment {
+                DOCKER_USERNAME = credentials("docker-user")
+                DOCKER_PASSWORD = credentials("docker-password")
+            }
+            steps {
+                sh "docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
+                sh "docker push zwenger/node"
+            }
+        }
         stage('stop') {
             steps {
                 sh 'make stop'
@@ -54,6 +64,7 @@ pipeline {
                 }
             }
         }
+        
         
     //     stage('Sonarqube') {
           
