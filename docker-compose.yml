@@ -21,11 +21,6 @@ services:
       - "27017:27017"
     networks:
       - mern-app
-    volumes:
-      - mongo-data:/data/db
 networks:
   mern-app:
     driver: bridge
-volumes:
-  mongo-data:
-    driver: local
