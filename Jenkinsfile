@@ -3,17 +3,43 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'pwd'
-                sh 'ls'
+                sh 'make build'
+
             }
-            // post {
-            //     success {
-            //         slackSend (color: 'good', message: "BUILD SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-            //     }
-            //     failure {
-            //         slackSend (color: 'danger', message: "BUILD FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-            //     }
-            // }
+            post {
+                success {
+                    slackSend (color: 'good', message: "BUILD SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+                failure {
+                    slackSend (color: 'danger', message: "BUILD FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+            }
+        }
+        stage('run') {
+            steps {
+                sh 'make run'
+            }
+            post {
+                success {
+                    slackSend (color: 'good', message: "RUN SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+                failure {
+                    slackSend (color: 'danger', message: "RUN FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+            }
+        }
+        stage('stop') {
+            steps {
+                sh 'make stop'
+            }
+            post {
+                success {
+                    slackSend (color: 'good', message: "STOP SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+                failure {
+                    slackSend (color: 'danger', message: "STOP FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+            }
         }
     //     stage('Test') {
     //         steps {
